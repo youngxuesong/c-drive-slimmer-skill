@@ -92,6 +92,12 @@ Preview low-risk temp cleanup first:
 pwsh -ExecutionPolicy Bypass -File "$env:USERPROFILE\.codex\skills\c-drive-slimmer\scripts\Clear-LowRiskTemp.ps1" -WhatIf
 ```
 
+Write low-risk cleanup reports to a known folder:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File "$env:USERPROFILE\.codex\skills\c-drive-slimmer\scripts\Clear-LowRiskTemp.ps1" -WhatIf -OutputDir C:\tmp\c-drive-low-risk-clean
+```
+
 Run developer cache cleanup:
 
 ```powershell
@@ -102,6 +108,12 @@ Preview developer cache cleanup first:
 
 ```powershell
 pwsh -ExecutionPolicy Bypass -File "$env:USERPROFILE\.codex\skills\c-drive-slimmer\scripts\Clear-DevCaches.ps1" -WhatIf
+```
+
+Write developer cache cleanup reports to a known folder:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File "$env:USERPROFILE\.codex\skills\c-drive-slimmer\scripts\Clear-DevCaches.ps1" -WhatIf -OutputDir C:\tmp\c-drive-dev-cache-clean
 ```
 
 ## Output Files

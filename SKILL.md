@@ -69,6 +69,9 @@ pwsh -ExecutionPolicy Bypass -File ...\Clear-LowRiskTemp.ps1
 # Preview low-risk cleanup without deleting anything
 pwsh -ExecutionPolicy Bypass -File ...\Clear-LowRiskTemp.ps1 -WhatIf
 
+# Save low-risk cleanup report to a custom folder
+pwsh -ExecutionPolicy Bypass -File ...\Clear-LowRiskTemp.ps1 -WhatIf -OutputDir C:\tmp\c-drive-low-risk-clean
+
 # Include Windows temp as well; run elevated when needed
 pwsh -ExecutionPolicy Bypass -File ...\Clear-LowRiskTemp.ps1 -IncludeWindowsTemp
 
@@ -77,6 +80,9 @@ pwsh -ExecutionPolicy Bypass -File ...\Clear-DevCaches.ps1
 
 # Preview developer cache cleanup without deleting anything
 pwsh -ExecutionPolicy Bypass -File ...\Clear-DevCaches.ps1 -WhatIf
+
+# Save developer cache cleanup report to a custom folder
+pwsh -ExecutionPolicy Bypass -File ...\Clear-DevCaches.ps1 -WhatIf -OutputDir C:\tmp\c-drive-dev-cache-clean
 
 # Also clear NuGet and Gradle caches
 pwsh -ExecutionPolicy Bypass -File ...\Clear-DevCaches.ps1 -IncludeNuGet -IncludeGradle
