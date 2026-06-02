@@ -24,6 +24,22 @@ function Format-Bytes {
     }
 }
 
+function Format-MarkdownCell {
+    param([object]$Value)
+    if ($null -eq $Value) { return '' }
+    $text = [string]$Value
+    $text = $text.Replace('|', '\|')
+    $text = $text -replace '\r?\n', ' '
+    return $text.Trim()
+}
+
+function Format-MarkdownCodeCell {
+    param([object]$Value)
+    if ($null -eq $Value -or [string]::IsNullOrWhiteSpace([string]$Value)) { return '' }
+    $text = Format-MarkdownCell $Value
+    return "``$text``"
+}
+
 function Get-DirectorySize {
     param(
         [string]$Path,
@@ -310,7 +326,7 @@ $lines.Add('| Size | Risk | Category | Name | Path | Recommendation | Notes |')
 $lines.Add('|---:|---|---|---|---|---|---|')
 foreach ($item in $report.Candidates) {
     $suffix = if ($item.TimedOut) { ' Partial estimate.' } else { '' }
-    $lines.Add("| $($item.Size) | $($item.Risk) | $($item.Category) | $($item.Name) | ``$($item.Path)`` | $($item.Cleanup) | $($item.Notes)$suffix |")
+    $lines.Add("| $(Format-MarkdownCell $item.Size) | $(Format-MarkdownCell $item.Risk) | $(Format-MarkdownCell $item.Category) | $(Format-MarkdownCell $item.Name) | $(Format-MarkdownCodeCell $item.Path) | $(Format-MarkdownCell $item.Cleanup) | $(Format-MarkdownCell "$($item.Notes)$suffix") |")
 }
 $lines.Add('')
 $lines.Add('## Top Root Directories')
@@ -318,7 +334,7 @@ $lines.Add('')
 $lines.Add('| Size | Timed Out | Path |')
 $lines.Add('|---:|---|---|')
 foreach ($item in $report.TopRootDirectories) {
-    $lines.Add("| $($item.Size) | $($item.TimedOut) | ``$($item.Path)`` |")
+    $lines.Add("| $(Format-MarkdownCell $item.Size) | $(Format-MarkdownCell $item.TimedOut) | $(Format-MarkdownCodeCell $item.Path) |")
 }
 $lines.Add('')
 $lines.Add('## Large Files')
@@ -326,7 +342,7 @@ $lines.Add('')
 $lines.Add('| Size | Last Write | Path |')
 $lines.Add('|---:|---|---|')
 foreach ($item in $report.LargeFiles) {
-    $lines.Add("| $($item.Size) | $($item.LastWriteTime) | ``$($item.Path)`` |")
+    $lines.Add("| $(Format-MarkdownCell $item.Size) | $(Format-MarkdownCell $item.LastWriteTime) | $(Format-MarkdownCodeCell $item.Path) |")
 }
 $lines.Add('')
 $lines.Add('## Orphaned Startup Entries')
@@ -334,7 +350,7 @@ $lines.Add('')
 $lines.Add('| Name | Location | User | Missing Executable | Command |')
 $lines.Add('|---|---|---|---|---|')
 foreach ($item in $report.OrphanedStartupEntries) {
-    $lines.Add("| $($item.Name) | $($item.Location) | $($item.User) | ``$($item.ExecutablePath)`` | ``$($item.Command)`` |")
+    $lines.Add("| $(Format-MarkdownCell $item.Name) | $(Format-MarkdownCell $item.Location) | $(Format-MarkdownCell $item.User) | $(Format-MarkdownCodeCell $item.ExecutablePath) | $(Format-MarkdownCodeCell $item.Command) |")
 }
 $lines.Add('')
 $lines.Add('## Orphaned Services')
@@ -342,7 +358,7 @@ $lines.Add('')
 $lines.Add('| Name | Display Name | State | Start Mode | Missing Executable | Path Name |')
 $lines.Add('|---|---|---|---|---|---|')
 foreach ($item in $report.OrphanedServices) {
-    $lines.Add("| $($item.Name) | $($item.DisplayName) | $($item.State) | $($item.StartMode) | ``$($item.ExecutablePath)`` | ``$($item.PathName)`` |")
+    $lines.Add("| $(Format-MarkdownCell $item.Name) | $(Format-MarkdownCell $item.DisplayName) | $(Format-MarkdownCell $item.State) | $(Format-MarkdownCell $item.StartMode) | $(Format-MarkdownCodeCell $item.ExecutablePath) | $(Format-MarkdownCodeCell $item.PathName) |")
 }
 if ($null -ne $report.Dism) {
     $lines.Add('')

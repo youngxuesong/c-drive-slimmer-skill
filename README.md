@@ -16,16 +16,18 @@ Windows C: drive cleanup scanner for Codex. It helps diagnose low disk space, sl
 Clone this repository into your Codex skills directory:
 
 ```powershell
+New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills"
 cd $env:USERPROFILE\.codex\skills
 git clone https://github.com/youngxuesong/c-drive-slimmer-skill.git c-drive-slimmer
 ```
 
 Restart Codex after installation so the skill can be discovered.
 
-If your skills directory does not exist yet:
+Update an existing install:
 
 ```powershell
-New-Item -ItemType Directory -Force "$env:USERPROFILE\.codex\skills"
+cd $env:USERPROFILE\.codex\skills\c-drive-slimmer
+git pull
 ```
 
 ## Use With Codex
