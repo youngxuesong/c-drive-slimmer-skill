@@ -80,6 +80,30 @@ Scan specific roots for large files:
 pwsh -ExecutionPolicy Bypass -File "$env:USERPROFILE\.codex\skills\c-drive-slimmer\scripts\Scan-CDriveCleanup.ps1" -LargeFileRoots C:\Users\Administrator\Downloads,C:\project
 ```
 
+Run low-risk temp cleanup:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File "$env:USERPROFILE\.codex\skills\c-drive-slimmer\scripts\Clear-LowRiskTemp.ps1"
+```
+
+Preview low-risk temp cleanup first:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File "$env:USERPROFILE\.codex\skills\c-drive-slimmer\scripts\Clear-LowRiskTemp.ps1" -WhatIf
+```
+
+Run developer cache cleanup:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File "$env:USERPROFILE\.codex\skills\c-drive-slimmer\scripts\Clear-DevCaches.ps1"
+```
+
+Preview developer cache cleanup first:
+
+```powershell
+pwsh -ExecutionPolicy Bypass -File "$env:USERPROFILE\.codex\skills\c-drive-slimmer\scripts\Clear-DevCaches.ps1" -WhatIf
+```
+
 ## Output Files
 
 The scanner prints paths like:
@@ -115,5 +139,7 @@ c-drive-slimmer/
 ├── agents/
 │   └── openai.yaml
 └── scripts/
+    ├── Clear-DevCaches.ps1
+    ├── Clear-LowRiskTemp.ps1
     └── Scan-CDriveCleanup.ps1
 ```

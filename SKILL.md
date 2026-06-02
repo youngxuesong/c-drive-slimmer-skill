@@ -29,6 +29,7 @@ Use this skill to reclaim Windows C: drive space safely.
    - High risk: app data, VM/container images, hibernation/pagefile changes, Windows component store, unknown large files.
 4. Recommend a staged cleanup plan: low-risk first, then user-reviewed medium/high-risk items.
 5. Only execute cleanup after explicit confirmation for each category.
+6. For approved low-risk cleanup, prefer bundled scripts over ad hoc shell commands.
 
 ## Scanner Usage
 
@@ -59,6 +60,28 @@ pwsh -ExecutionPolicy Bypass -File ...\Scan-CDriveCleanup.ps1 -LargeFileRoots C:
 pwsh -ExecutionPolicy Bypass -File ...\Scan-CDriveCleanup.ps1 -IncludeUserProfiles
 ```
 
+Cleanup helpers:
+
+```powershell
+# Low-risk temp cleanup for the current user
+pwsh -ExecutionPolicy Bypass -File ...\Clear-LowRiskTemp.ps1
+
+# Preview low-risk cleanup without deleting anything
+pwsh -ExecutionPolicy Bypass -File ...\Clear-LowRiskTemp.ps1 -WhatIf
+
+# Include Windows temp as well; run elevated when needed
+pwsh -ExecutionPolicy Bypass -File ...\Clear-LowRiskTemp.ps1 -IncludeWindowsTemp
+
+# Clear pip and npm caches
+pwsh -ExecutionPolicy Bypass -File ...\Clear-DevCaches.ps1
+
+# Preview developer cache cleanup without deleting anything
+pwsh -ExecutionPolicy Bypass -File ...\Clear-DevCaches.ps1 -WhatIf
+
+# Also clear NuGet and Gradle caches
+pwsh -ExecutionPolicy Bypass -File ...\Clear-DevCaches.ps1 -IncludeNuGet -IncludeGradle
+```
+
 ## Built-In Detection
 
 The scanner reports:
@@ -82,6 +105,7 @@ Use these only after reviewing the report with the user:
 - Docker/WSL/VM data: report usage first; use native prune/export/compact workflows only with user consent.
 - Package managers: use native cache commands (`npm cache clean --force`, `pip cache purge`, `dotnet nuget locals all --clear`, etc.) after confirming impact.
 - Orphaned startup/service entries from uninstalled apps: report exact registry value and service name first; remove only after confirmation and only from an elevated shell.
+- Bundled cleanup scripts: `scripts/Clear-LowRiskTemp.ps1` for low-risk temp cleanup, `scripts/Clear-DevCaches.ps1` for developer caches.
 
 ## Output Expectations
 
