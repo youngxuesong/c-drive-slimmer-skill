@@ -1,0 +1,4 @@
+interface:
+  display_name: "C Drive Slimmer"
+  short_description: "Scan C: drive cleanup candidates safely."
+  default_prompt: "Scan my C: drive for cleanup candidates and produce a safe slimming plan."
